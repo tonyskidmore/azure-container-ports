@@ -5,7 +5,7 @@ param name string = 'azurecontainerportscontainergroup'
 param location string = resourceGroup().location
 
 @description('Container image to deploy')
-param image string = 'docker pull ghcr.io/tonyskidmore/azure-container-ports:main'
+param image string = 'ghcr.io/tonyskidmore/azure-container-ports:main'
 
 @description('Port to open for HTTP on the container and the public IP address.')
 param httpPort int = 5000
@@ -25,6 +25,7 @@ param memoryInGb int = 2
   'Never'
   'OnFailure'
 ])
+param restartPolicy string = 'Always'
 
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01' = {
   name: name
@@ -32,7 +33,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
   properties: {
     containers: [
       {
-        name: 'mycontainer'
+        name: name
         properties: {
           image: image
           resources: {
@@ -53,6 +54,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
       }
     ]
     osType: 'Linux'
+    restartPolicy: restartPolicy
     ipAddress: {
       type: 'Public'
       ports: [
