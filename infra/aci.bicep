@@ -1,11 +1,11 @@
 @description('Name for the container group')
-param name string = 'acilinuxpublicipcontainergroup'
+param name string = 'azurecontainerportscontainergroup'
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
-@description('Container image to deploy. Should be of the form repoName/imagename:tag for images stored in public Docker Hub, or a fully qualified URI for other registries. Images from private registries require additional registry credentials.')
-param image string = 'mcr.microsoft.com/azuredocs/aci-helloworld'
+@description('Container image to deploy')
+param image string = 'docker pull ghcr.io/tonyskidmore/azure-container-ports:main'
 
 @description('Port to open for HTTP on the container and the public IP address.')
 param httpPort int = 5000
